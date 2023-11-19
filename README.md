@@ -1,5 +1,7 @@
 # ChessAI - Chinese Chess Game Analyzer
 
+ChessAI is a groundbreaking tool that brings together computer vision, chess algorithms, and advanced analytics to revolutionize the Chinese Chess analytics landscape. With ChessAI, you don't need expensive electronic boards to analyze your games. Simply use your regular board, set up a camera to capture the position, and let ChessAI do the rest.
+
 - Main source code: `chesssai`.
 - Deep Learning / Data Preparation: `dnn_models/data_preparation` - Currenly only support for Chinese Chess (XiangQi), [contact me](https://aicurious.io/contact) for the license and the source code of the data preparation tool.
 - Deep Learning / Training: `dnn_models/training`.
