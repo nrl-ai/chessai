@@ -8,6 +8,7 @@ ChessAI is a groundbreaking tool that brings together computer vision, chess alg
 
 ## 2. Environment setup
 
+- Requirements: Python 3.9, [Conda](https://docs.conda.io/en/latest/miniconda.html), Node.js 18+.
 - Clone this repository.
 
 ```bash
@@ -20,6 +21,15 @@ git clone https://github.com/vietanhdev/chessai --recursive
 conda create -n chessai python=3.9
 conda activate chessai
 pip install -e .
+```
+
+- Install Node.js packages and build the frontend.
+
+```bash
+cd chessai/frontend
+npm install
+cd ..
+bash build_frontend.sh
 ```
 
 ## 3. Build chess engine
@@ -38,7 +48,7 @@ go build
 ## 4. Usage
 
 ```bash
-ENGINE_PATH="data/engines/godogpaw-macos-arm" python -m chessai.app
+ENGINE_PATH="data/engines/godogpaw-macos-arm" python -m chessai.app --run_app
 ```
 
 Replace `ENGINE_PATH` with the path to the chess engine executable file.

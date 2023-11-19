@@ -8,4 +8,5 @@ dnn_models/data_preparation/data/combined_data/
 frontend/node_modules
 frontend/.next
 frontend/out
+chessai/frontend-dist
 *.egg-info

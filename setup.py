@@ -78,8 +78,6 @@ setup(
         "chessai": [
             "chessai/frontend-dist/**/*",
             "chessai/frontend-dist/*",
-            "chessai/apps/**/*",
-            "chessai/apps/*",
         ]
     },
     include_package_data=True,

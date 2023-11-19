@@ -6,10 +6,8 @@ import pathlib
 import platform
 import shutil
 import subprocess
-import tempfile
-
 import pkg_resources
-import requests
+
 
 def open_file(path):
     """
@@ -41,28 +39,6 @@ def extract_frontend_dist(static_folder):
         with open(os.path.join(static_folder, "index.html"), "w") as f:
             f.write(
                 "<b>frontend-dist</b> not found in package chessai. Please run: <code>bash build_frontend.sh</code>"
-            )
-        return
-
-
-def extract_apps(static_folder):
-    """
-    Extract folder apps from package chessai
-    and put it in the same static folder for serving
-    """
-    if os.path.exists(static_folder):
-        logging.info(f"Refreshing {static_folder}...")
-        shutil.rmtree(static_folder, ignore_errors=True)
-    apps_folder = pkg_resources.resource_filename("chessai", "apps")
-    if os.path.exists(apps_folder):
-        pathlib.Path(static_folder).parent.mkdir(parents=True, exist_ok=True)
-        shutil.copytree(apps_folder, static_folder)
-    if not os.path.exists(static_folder):
-        logging.warning("apps not found in package chessai")
-        pathlib.Path(static_folder).mkdir(parents=True, exist_ok=True)
-        with open(os.path.join(static_folder, "index.html"), "w") as f:
-            f.write(
-                "<b>apps</b> not found in package chessai. Please run: <code>bash build_apps.sh</code>"
             )
         return
 

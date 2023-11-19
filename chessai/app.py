@@ -42,7 +42,7 @@ chess_engine = ChessEngine(engine_path)
 def run_window():
     from tkinter import Tk
     import webview
-    webview.create_window("chessai", 'http://127.0.0.1:5678', width=1200, height=800)
+    webview.create_window("ChessAI - Chinese Chess Analyzer", 'http://127.0.0.1:5678', width=1400, height=800)
     webview.start()
     os._exit(0)
 
@@ -139,7 +139,7 @@ def main():
 
     # Import these after setting data_root
     from chessai.routers import system_monitor, xiangqi
-    from chessai.utils import extract_frontend_dist, extract_apps
+    from chessai.utils import extract_frontend_dist
     from chessai.database import engine, Base
 
     logging.info("Extracting frontend distribution...")
@@ -149,9 +149,6 @@ def main():
     extract_frontend_dist(static_folder)
     print(static_folder)
 
-    logging.info("Extracting apps...")
-    apps_folder = os.path.abspath(os.path.join(global_data.data_root, "apps"))
-    extract_apps(apps_folder)
 
     logging.info("Creating database tables...")
     Base.metadata.create_all(bind=engine)
