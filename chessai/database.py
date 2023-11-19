@@ -7,7 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, types
 
-from chessai import globals as globals_data
+from chessai import global_data as globals_data
 
 if not os.path.exists(globals_data.data_root):
     os.makedirs(globals_data.data_root)

@@ -14,12 +14,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from chessai.app_info import __appname__, __description__, __version__
-from chessai import globals as global_data
+from chessai import global_data
 from chessai import config
 from chessai.board_aligner import BoardAligner
 from chessai.piece_detector import PieceDetector
 from chessai.chess_engine import ChessEngine
 from chessai.visualization import draw_board_canvas
+from chessai.utils import list_camera_ports
+from chessai.camera_manager import start_camera
 
 aligner = BoardAligner(
     config.REFERENCE_ARUCO_IMAGE_PATH,
@@ -75,26 +77,6 @@ def chessai_process_loop():
         if frame is not None:
             chessai_process(frame)
 
-def capture_loop():
-    try:
-        cap = cv2.VideoCapture(global_data.camera_id)
-    except Exception as e:
-        logging.error(e)
-        return
-    global_data.camera_is_running = True
-    while True:
-        if global_data.camera_shutdown_signal:
-            global_data.camera_is_running = False
-            break
-        ret, frame = cap.read()
-        if ret is False:
-            global_data.camera_is_running = False
-            break
-        if frame is not None:
-            with global_data.frame_lock:
-                global_data.original_frame = frame
-    global_data.camera_is_running = False
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -149,7 +131,7 @@ def main():
     pathlib.Path(global_data.data_root).mkdir(parents=True, exist_ok=True)
 
     # Import these after setting data_root
-    from chessai.routers import system_monitor, xiangqi
+    from chessai.routers import system_monitor, xiangqi, camera
     from chessai.utils import extract_frontend_dist
     from chessai.database import engine, Base
 
@@ -178,6 +160,7 @@ def main():
 
     app.include_router(xiangqi.router)
     app.include_router(system_monitor.router)
+    app.include_router(camera.router)
     app.mount(
         "/", StaticFiles(directory=static_folder, html=True), name="static"
     )
@@ -185,13 +168,20 @@ def main():
     def run_webapp():
         uvicorn.run(app, host=args.host, port=args.port, workers=1)
 
+    # Scan for available camera ports
+    logging.info("Scanning for available camera ports...")
+    _, global_data.working_camera_ports = list_camera_ports()
+    if len(global_data.working_camera_ports) == 0:
+        logging.error("No working camera ports found. Please check your camera.")
+        return
+    global_data.camera_id = global_data.working_camera_ports[0]
+
     # Start the chessai process loop
     thread = threading.Thread(target=chessai_process_loop)
     thread.start()
 
     # Start the capture loop
-    thread = threading.Thread(target=capture_loop)
-    thread.start()
+    start_camera()
 
     if args.run_app:
         # Run the app in a separate thread
@@ -202,6 +192,7 @@ def main():
         run_window()
     else:
         run_webapp()
+
 
 
 if __name__ == "__main__":

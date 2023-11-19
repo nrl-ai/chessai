@@ -1,3 +1,5 @@
+import cv2
+
 REFERENCE_ARUCO_IMAGE_PATH = "data/board_with_aruco.png"
 REFERENCE_BOARD_IMAGE_PATH = "data/board.png"
 

@@ -3,7 +3,7 @@ from fastapi import APIRouter
 
 router = APIRouter(
     prefix="/api/system_monitor",
-    tags=["System Monitor"],
+    tags=["System Monitor APIs"],
 )
 
 @router.get("")

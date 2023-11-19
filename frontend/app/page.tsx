@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/default/ui/select"
+import { set } from "date-fns"
 
 import { DebugImages } from "@/components/debug-images"
 
@@ -20,6 +21,43 @@ const DotBgStyle = {
 }
 
 export default function IndexPage() {
+  const [selectedCamera, setSelectedCamera] = useState<Number>(0)
+  const [cameraList, setCameraList] = useState<string[]>([])
+  useEffect(() => {
+    fetch("/api/camera/list")
+      .then((res) => res.json())
+      .then((data) => {
+        setCameraList(data.available_camera_ports)
+        setSelectedCamera(data.selected_camera_port)
+      })
+  }, [])
+
+  function switchCamera(camera: string) {
+    fetch("/api/camera/switch", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ camera_id: Number.parseInt(camera) }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setSelectedCamera(Number.parseInt(camera))
+      })
+  }
+
+  function resetCamera() {
+    fetch("/api/camera/reset", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json())
+    setTimeout(() => {
+      window.location.href = "/"
+    }, 500)
+  }
+
   const visualizationImage = useRef<HTMLImageElement>(null)
 
   // Refresh images every 1 second
@@ -27,7 +65,7 @@ export default function IndexPage() {
     const interval = setInterval(() => {
       if (visualizationImage.current) {
         visualizationImage.current.src =
-          "/api/xiangqi/visualization_frame?" + Date.now()
+          "/api/xiangqi/visualization_frame?t=" + Date.now()
       }
     }, 1000)
     return () => clearInterval(interval)
@@ -45,14 +83,31 @@ export default function IndexPage() {
             height={240}
             alt="Viz Image"
           />
-          <Select>
+          <Select
+            onValueChange={(value) => switchCamera(value)}
+            value={selectedCamera.toString()}
+          >
             <SelectTrigger id="camera">
-              <SelectValue placeholder="Select">Camera:0</SelectValue>
+              <SelectValue placeholder="Select Camera">
+                Camera:&nbsp;{selectedCamera.toLocaleString()}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent position="popper">
-              <SelectItem value="0">Camera:0</SelectItem>
+              {cameraList.map((camera) => (
+                <SelectItem value={camera} key={camera}>
+                  Camera:&nbsp;{camera}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
+          <Button
+            className="w-full"
+            onClick={() => {
+              resetCamera()
+            }}
+          >
+            Reset Camera
+          </Button>
           <div>
             Visualization of current board camera. Please make sure the board is
             in the center of the camera and all ARUCO markers are visible.

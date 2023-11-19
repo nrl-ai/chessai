@@ -9,6 +9,8 @@ import subprocess
 import pkg_resources
 
 from chessai.config import DEFAULT_VISUALIZATION_FRAME
+from chessai import global_data
+
 
 def open_file(path):
     """
@@ -60,7 +62,6 @@ def draw_message_box(width, height, message):
     return message_frame
 
 
-
 def encode_image(image):
     _, buffer = cv2.imencode(".jpg", image)
     return buffer.tobytes()
@@ -69,14 +70,56 @@ def encode_image(image):
 def original_frame_stream():
     while True:
         frame = None
-        with globals.frame_lock:
-            frame = globals.original_frame
+        with global_data.frame_lock:
+            frame = global_data.original_frame
             if frame is None:
                 frame = DEFAULT_VISUALIZATION_FRAME
         encoded_frame = encode_image(frame)
         if frame is not None:
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
-            bytearray(encoded_frame) + b'\r\n')
+            yield (
+                b"--frame\r\n"
+                b"Content-Type: image/jpeg\r\n\r\n"
+                + bytearray(encoded_frame)
+                + b"\r\n"
+            )
         else:
-            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
-            bytearray(encoded_frame) + b'\r\n')
+            yield (
+                b"--frame\r\n"
+                b"Content-Type: image/jpeg\r\n\r\n"
+                + bytearray(encoded_frame)
+                + b"\r\n"
+            )
+
+
+def list_camera_ports():
+    """
+    Test the ports and returns a tuple with the available ports
+    and the ones that are working.
+    """
+    is_working = True
+    dev_port = 0
+    working_ports = []
+    available_ports = []
+    while is_working:
+        camera = cv2.VideoCapture(dev_port)
+        if not camera.isOpened():
+            is_working = False
+            print("Port %s is not working." % dev_port)
+        else:
+            is_reading, img = camera.read()
+            w = camera.get(3)
+            h = camera.get(4)
+            if is_reading:
+                print(
+                    "Port %s is working and reads images (%s x %s)"
+                    % (dev_port, h, w)
+                )
+                working_ports.append(dev_port)
+            else:
+                print(
+                    "Port %s for camera ( %s x %s) is present but does not reads."
+                    % (dev_port, h, w)
+                )
+                available_ports.append(dev_port)
+        dev_port += 1
+    return available_ports, working_ports
