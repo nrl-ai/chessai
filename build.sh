@@ -1,0 +1,1 @@
+pyinstaller -y --add-data "./data;data" main.py

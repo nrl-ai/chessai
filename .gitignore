@@ -1,0 +1,7 @@
+.DS_Store
+*.pyc
+__pycache__
+result*
+cpu_profile
+godogpaw.log.*
+dnn_models/data_preparation/data/combined_data/

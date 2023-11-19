@@ -1,0 +1,6 @@
+[submodule "godogpaw"]
+	path = godogpaw
+	url = https://github.com/hmgle/godogpaw
+[submodule "dnn_models/data_preparation"]
+	path = dnn_models/data_preparation
+	url = https://github.com/vietanhdev/chessai-data
