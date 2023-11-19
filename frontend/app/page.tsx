@@ -10,14 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/default/ui/select"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/registry/default/ui/table"
 
 import { DebugImages } from "@/components/debug-images"
 
@@ -29,7 +21,6 @@ const DotBgStyle = {
 
 export default function IndexPage() {
   const visualizationImage = useRef<HTMLImageElement>(null)
-  const originalImage = useRef<HTMLImageElement>(null)
 
   // Refresh images every 1 second
   useEffect(() => {
@@ -37,9 +28,6 @@ export default function IndexPage() {
       if (visualizationImage.current) {
         visualizationImage.current.src =
           "/api/xiangqi/visualization_frame?" + Date.now()
-      }
-      if (originalImage.current) {
-        originalImage.current.src = "/api/xiangqi/original_frame?" + Date.now()
       }
     }, 1000)
     return () => clearInterval(interval)
@@ -51,7 +39,6 @@ export default function IndexPage() {
         <div className="flex w-[250px] flex-col gap-2">
           <h2 className="text-xl font-semibold leading-none">Camera</h2>
           <img
-            ref={originalImage}
             src="/api/xiangqi/original_frame"
             className="rounded-md"
             width={320}
@@ -81,7 +68,7 @@ export default function IndexPage() {
             alt="Viz Image"
           />
         </div>
-        <div className="flex w-[250px] flex-col gap-2">
+        <div className="flex w-[200px] flex-col gap-2">
           <div className="flex flex-row gap-2">
             <div className="flex flex-col gap-1">
               <div className="text-sm">Player 1</div>
@@ -92,8 +79,8 @@ export default function IndexPage() {
               <div className="text-2xl">00:00:00</div>
             </div>
           </div>
-          <Button className="h-20 w-full bg-blue-600 hover:bg-blue-500">
-            Play
+          <Button className="h-20 w-full bg-blue-600 hover:bg-blue-500 dark:text-white">
+            Play (Space)
           </Button>
           <Button className="w-full">New Game</Button>
           <Button className="w-full">Move Suggestion</Button>
@@ -102,24 +89,26 @@ export default function IndexPage() {
           <h2 className="mt-4 text-xl font-semibold leading-none">
             Move History
           </h2>
-          <Table className="max-h-[100px] w-full overflow-y-auto">
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Move</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>e5-e6</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>2</TableCell>
-                <TableCell>e5-e6</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <div className="max-h-[100px] w-full overflow-y-auto">
+            <table className="flex flex-col gap-1">
+              <thead className="border-b-2 border-gray-600">
+                <tr className="flex flex-row gap-1 text-left">
+                  <th className="w-1/2">ID</th>
+                  <th className="w-1/2">Move</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="flex flex-row gap-1">
+                  <td className="w-1/2">1</td>
+                  <td className="w-1/2">e2e4</td>
+                </tr>
+                <tr className="flex flex-row gap-1">
+                  <td className="w-1/2">2</td>
+                  <td className="w-1/2">e7e5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
       <section className="container mt-4 grid items-center gap-2 py-2">

@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import pkg_resources
 
+from chessai.config import DEFAULT_VISUALIZATION_FRAME
 
 def open_file(path):
     """
@@ -57,3 +58,25 @@ def draw_message_box(width, height, message):
         cv2.LINE_AA,
     )
     return message_frame
+
+
+
+def encode_image(image):
+    _, buffer = cv2.imencode(".jpg", image)
+    return buffer.tobytes()
+
+
+def original_frame_stream():
+    while True:
+        frame = None
+        with globals.frame_lock:
+            frame = globals.original_frame
+            if frame is None:
+                frame = DEFAULT_VISUALIZATION_FRAME
+        encoded_frame = encode_image(frame)
+        if frame is not None:
+            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
+            bytearray(encoded_frame) + b'\r\n')
+        else:
+            yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
+            bytearray(encoded_frame) + b'\r\n')

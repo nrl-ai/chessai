@@ -1,12 +1,12 @@
+import io
+
 from fastapi import APIRouter, Response
+from starlette.responses import StreamingResponse
 
 from chessai import globals
-import cv2
+from chessai.utils import encode_image, original_frame_stream
+from chessai.config import DEFAULT_VISUALIZATION_FRAME
 
-
-DEFAULT_VISUALIZATION_FRAME = cv2.imread(
-    "data/default_visualization_frame.jpeg"
-)
 
 router = APIRouter(
     prefix="/api/xiangqi",
@@ -14,25 +14,9 @@ router = APIRouter(
 )
 
 
-def encode_image(image):
-    _, buffer = cv2.imencode(".jpg", image)
-    return buffer.tobytes()
-
-
 @router.get("/original_frame", response_class=Response)
 async def original_frame():
-    with globals.frame_lock:
-        frame = None
-        if globals.original_frame is None:
-            frame = DEFAULT_VISUALIZATION_FRAME
-        else:
-            frame = globals.original_frame
-        encoded_frame = encode_image(frame)
-        return Response(
-            content=encoded_frame,
-            media_type="image/jpg",
-        )
-
+    return StreamingResponse(original_frame_stream(), media_type="multipart/x-mixed-replace;boundary=frame")
 
 @router.get("/debug_frame", response_class=Response)
 async def debug_frame():
@@ -48,7 +32,6 @@ async def debug_frame():
             media_type="image/jpg",
         )
 
-
 @router.get("/visualization_frame", response_class=Response)
 async def visualization_frame():
     with globals.frame_lock:
@@ -62,3 +45,4 @@ async def visualization_frame():
             content=encoded_frame,
             media_type="image/jpg",
         )
+

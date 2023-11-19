@@ -48,9 +48,11 @@ def run_window():
 
 def chessai_process(frame):
     original_frame_viz = frame.copy()
-    is_cropped, board_image = aligner.process(frame, visualize=original_frame_viz)
+    _, board_image = aligner.process(frame, visualize=original_frame_viz)
     board_image_viz = board_image.copy()
     board_array = piece_detector.detect(board_image, visualize=board_image_viz)
+    with global_data.board_lock:
+        global_data.board_array = board_array
 
     # Two images on the top
     target_height = 640
@@ -74,16 +76,25 @@ def chessai_process_loop():
             chessai_process(frame)
 
 def capture_loop():
-    cap = cv2.VideoCapture(1)
+    try:
+        cap = cv2.VideoCapture(global_data.camera_id)
+    except Exception as e:
+        logging.error(e)
+        return
+    global_data.camera_is_running = True
     while True:
+        if global_data.camera_shutdown_signal:
+            global_data.camera_is_running = False
+            break
         ret, frame = cap.read()
         if ret is False:
-            print("Check camera connection")
-            input()
-            sys.exit(0)
+            global_data.camera_is_running = False
+            break
         if frame is not None:
             with global_data.frame_lock:
                 global_data.original_frame = frame
+    global_data.camera_is_running = False
+
 
 def main():
     parser = argparse.ArgumentParser(
