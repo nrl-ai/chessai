@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/registry/default/ui/button"
-import { Checkbox } from "@/registry/default/ui/checkbox"
 import {
   Select,
   SelectContent,
@@ -10,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/default/ui/select"
-import { set } from "date-fns"
 
 import { DebugImages } from "@/components/debug-images"
 
@@ -18,6 +16,7 @@ const DotBgStyle = {
   backgroundImage: "radial-gradient(#888888 0.75px, transparent 0)",
   backgroundSize: "32px 32px",
   backgroundPosition: "-19px -19px",
+  minHeight: "calc(100vh - 5rem)",
 }
 
 export default function IndexPage() {
@@ -72,10 +71,10 @@ export default function IndexPage() {
   }, [])
 
   return (
-    <div style={DotBgStyle} className="min-h-screen pt-6">
-      <section className="container flex flex-row gap-6 py-2">
-        <div className="flex w-[250px] flex-col gap-2">
-          <h2 className="text-xl font-semibold leading-none">Camera</h2>
+    <div style={DotBgStyle} className="pt-6">
+      <section className="container flex flex-row gap-8 py-2">
+        <div className="flex w-[250px] flex-col gap-4">
+          <h2 className="text-xl font-semibold leading-none">Board Camera</h2>
           <img
             src="/api/xiangqi/original_frame"
             className="rounded-md"

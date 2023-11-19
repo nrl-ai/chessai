@@ -39,6 +39,7 @@ def get_install_requires():
         "pyinstaller==5.13.2",
         "svglib==1.5.1",
         "reportlab==4.0.4",
+        "serial==0.0.97",
     ]
 
     return install_requires

@@ -4,6 +4,7 @@ import argparse
 import logging
 import pathlib
 import threading
+import time
 
 import cv2
 import imutils
@@ -42,9 +43,8 @@ chess_engine = ChessEngine(engine_path)
 
 
 def run_window():
-    from tkinter import Tk
     import webview
-    webview.create_window("ChessAI - Chinese Chess Analyzer", 'http://127.0.0.1:5678', width=1400, height=800)
+    webview.create_window("ChessAI - Chinese Chess Analyzer", 'http://127.0.0.1:3000', width=1200, height=800)
     webview.start()
     os._exit(0)
 
@@ -187,6 +187,7 @@ def main():
         # Run the app in a separate thread
         thread = threading.Thread(target=run_webapp)
         thread.start()
+        time.sleep(3)
 
         # Run the window in the main thread
         run_window()
