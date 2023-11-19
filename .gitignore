@@ -5,3 +5,7 @@ result*
 cpu_profile
 godogpaw.log.*
 dnn_models/data_preparation/data/combined_data/
+frontend/node_modules
+frontend/.next
+frontend/out
+*.egg-info

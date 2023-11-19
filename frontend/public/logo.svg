@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg134"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.2 (dc2aeda, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs138" />
+  <sodipodi:namedview
+     id="namedview136"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="42.79"
+     inkscape:cx="9.990652"
+     inkscape:cy="8.681935"
+     inkscape:window-width="1390"
+     inkscape:window-height="1205"
+     inkscape:window-x="62"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="text1178" />
+  <ellipse
+     style="fill:#000000;stroke:#000000;stroke-width:1.994;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1"
+     id="path565"
+     cx="12"
+     cy="12"
+     rx="10.904747"
+     ry="10.992125" />
+  <g
+     aria-label="P"
+     transform="matrix(0.9468588,0,0,0.7824567,2.6776276,3.3447887)"
+     id="text1178"
+     style="font-size:26.6667px;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0">
+    <text
+       xml:space="preserve"
+       style="font-size:28.556px;font-family:Athelas;-inkscape-font-specification:Athelas;fill:#ffffff;stroke:#ffffff;stroke-width:0"
+       x="-0.27364051"
+       y="19.743483"
+       id="text467"
+       transform="scale(0.92179185,1.0848436)"><tspan
+         sodipodi:role="line"
+         id="tspan465"
+         x="-0.27364051"
+         y="19.743483"
+         style="stroke-width:0;font-weight:bold">C</tspan></text>
+  </g>
+</svg>

@@ -35,24 +35,11 @@ except:
     input()
     sys.exit(0)
 
-
 global_message = "ChessAI - Development Version"
 button_pos = None
-def handle_mouse_event(event, x, y, flags, param):
-    if event == cv2.EVENT_LBUTTONDOWN:
-        if x >= button_pos[0] and x <= button_pos[0] + button_pos[2] \
-            and y >= button_pos[1] and y <= button_pos[1] + button_pos[3]:
-            global global_message
-            global_message = "Thinking..."
-            best_move = chess_engine.get_move(board_array)
-            print(best_move)
-            global_message = "ChessAI - Development Version"
-cv2.namedWindow("ChessAI", cv2.WINDOW_NORMAL)
-cv2.setMouseCallback("ChessAI", handle_mouse_event)
-
-# Main loop
 while True:
     ret, frame = cap.read()
+    frame = cv2.imread("test_board.png")
     if ret is False:
         print("Check camera connection")
         input()
@@ -86,30 +73,6 @@ while True:
         viz_image = cv2.vconcat([top_row, bottom_row])
         viz_image = cv2.copyMakeBorder(
             viz_image, 0, 0, 200, 200, cv2.BORDER_CONSTANT, None, (0, 0, 0)
-        )
-
-        # Play button
-        button_height = 300
-        button_width = viz_image.shape[1] // 2 - 100
-        button_x = viz_image.shape[1] - button_width - 50
-        button_y = viz_image.shape[0] - button_height - 50
-        button_pos = (button_x, button_y, button_width, button_height)
-        cv2.rectangle(
-            viz_image,
-            (button_x, button_y),
-            (button_x + button_width, button_y + button_height),
-            (0, 255, 0),
-            -1,
-        )
-        button_text = "PLAY"
-        cv2.putText(
-            viz_image,
-            button_text,
-            (button_x + 50, button_y + 200),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            3,
-            (0, 0, 0),
-            3,
         )
 
         cv2.imshow("ChessAI", viz_image)

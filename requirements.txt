@@ -1,6 +1,0 @@
-opencv-contrib-python==4.7.0.72
-imutils==0.5.4
-pyserial==3.5
-pyinstaller==5.13.2
-svglib==1.5.1
-reportlab==4.0.4
