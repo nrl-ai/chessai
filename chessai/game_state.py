@@ -7,3 +7,5 @@ class GameState:
         self.board = board
         self.next_player = next_player
         self.moves = []
+        self.hint_move = None
+

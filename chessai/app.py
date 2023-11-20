@@ -65,7 +65,7 @@ def chessai_process(frame):
         global_data.debug_frame = top_row
 
     # Visualize the board
-    board_canvas = draw_board_canvas(board_array, global_data.hint_move)
+    board_canvas = draw_board_canvas(board_array, global_data.game_state.hint_move if global_data.game_state else None)
     board_canvas = imutils.resize(board_canvas, height=target_height)
     with global_data.frame_lock:
         global_data.visualization_frame = board_canvas

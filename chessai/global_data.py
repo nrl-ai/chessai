@@ -20,4 +20,3 @@ game_lock = Lock()
 game_state = None
 
 chess_engine = None
-hint_move = None

@@ -1,4 +1,5 @@
 import subprocess
+from chessai.game_state import GameState, Player
 
 
 class ChessEngine:
@@ -53,7 +54,7 @@ class ChessEngine:
         return text
 
     @staticmethod
-    def board_array_to_fen(board_array):
+    def board_array_to_fen(board_array, next_player):
         """Converts a board array to a FEN string."""
         fen = ""
         for row in board_array:
@@ -71,11 +72,14 @@ class ChessEngine:
                 fen += str(empty)
             fen += "/"
 
-        return fen[:-1] + " w - - 0 1"
+        player_str = "w" if next_player == Player.RED else "b"
+        return fen[:-1] + f" {player_str} - - 0 1"
 
-    def get_move(self, board_array, time_limit=2000):
+    def get_move(self, game_state, time_limit=2000):
         """Returns the best move for the given board array."""
-        fen = self.board_array_to_fen(board_array)
+        board_array = game_state.board
+        next_player = game_state.next_player
+        fen = self.board_array_to_fen(board_array, next_player)
         self.engine_write(f"position fen {fen}")
         self.engine_write(f"go movetime {time_limit}")
         self.current_fen = fen
