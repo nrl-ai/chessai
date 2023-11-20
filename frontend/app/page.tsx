@@ -192,19 +192,45 @@ export default function IndexPage() {
           <div className="flex flex-row gap-2">
             <div className="flex flex-col gap-1">
               <div className={"text-xl flex" + (isRedTurn ? " font-bold" : "")}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="mr-1 h-6 w-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                  />
+                </svg>
                 Red &nbsp;
                 {isRedTurn && <LoadingIcon />}
               </div>
-              <div className="text-xl">00:00:00</div>
+              <div className="text-xl">-------------</div>
             </div>
             <div className="flex flex-col gap-1">
               <div
                 className={"text-xl flex" + (isBlackTurn ? " font-bold" : "")}
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="ml-1 h-6 w-6"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
+                    clipRule="evenodd"
+                  />
+                </svg>
                 Black &nbsp;
                 {isBlackTurn && <LoadingIcon />}
               </div>
-              <div className="text-xl">00:00:00</div>
+              <div className="text-xl">-------------</div>
             </div>
           </div>
           <Button className="h-20 w-full bg-blue-600 hover:bg-blue-500 dark:text-white">
@@ -219,6 +245,11 @@ export default function IndexPage() {
           <Button className="w-full" disabled={!isPlaying}>
             AI Analyzer
           </Button>
+          {!isPlaying && (
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              Click <b>New Game</b> to start a new game from current position.
+            </div>
+          )}
           <div className={"flex flex-col gap-2" + (isPlaying ? "" : " hidden")}>
             <h2 className="mt-4 text-xl font-semibold leading-none">
               Move History
