@@ -1,4 +1,5 @@
 import logging
+import time
 import threading
 
 import cv2
@@ -18,6 +19,11 @@ def capture_loop():
             global_data.camera_is_running = False
             break
         ret, frame = cap.read()
+        frame = cv2.flip(frame, 1)
+        if int(time.time()) % 4 < 2:
+            frame = cv2.imread("test_board.png")
+        else:
+            frame = cv2.imread("test_board2.png")
         if ret is False:
             global_data.camera_is_running = False
             break

@@ -9,7 +9,7 @@ export function DebugImages() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (refDebugImage.current) {
-        refDebugImage.current.src = "/api/xiangqi/debug_frame?" + Date.now()
+        refDebugImage.current.src = "/api/vision/debug_frame?" + Date.now()
       }
     }, 1000)
     return () => clearInterval(interval)
@@ -35,7 +35,7 @@ export function DebugImages() {
       {showDebug && (
         <img
           ref={refDebugImage}
-          src="/api/xiangqi/debug_frame"
+          src="/api/vision/debug_frame"
           className="w-full rounded-md"
           width={2000}
           height={640}

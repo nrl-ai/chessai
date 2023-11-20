@@ -61,7 +61,7 @@ def overlay(background, overlay, x, y):
     return background
 
 
-def draw_board_canvas(board):
+def draw_board_canvas(board, hint_move=None):
     draw = ref_board_image.copy()
     for i in range(10):
         for j in range(9):
@@ -69,4 +69,21 @@ def draw_board_canvas(board):
             y = i * 110 + 30
             if board[i][j]:
                 draw = overlay(draw, ref_piece_images[board[i][j]], x, y)
+
+    if hint_move:
+        # Draw a hint move on the board
+        from_x = (ord(hint_move[0]) - ord("a")) * 110 + 60
+        from_y = (9 - int(hint_move[1])) * 110 + 60
+        to_x = (ord(hint_move[2]) - ord("a")) * 110 + 60
+        to_y = (9 - int(hint_move[3])) * 110 + 60
+        draw = cv2.arrowedLine(
+            draw,
+            (from_x, from_y),
+            (to_x, to_y),
+            (255, 0, 0),
+            10,
+            tipLength=20.0/np.sqrt((to_x-from_x)**2+(to_y-from_y)**2),
+        )
+        draw = cv2.circle(draw, (to_x, to_y), 10, (0, 255, 0), -1)
+
     return draw

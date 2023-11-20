@@ -39,7 +39,7 @@ engine_path = os.environ.get("ENGINE_PATH", DEFAULT_ENGINE_PATH)
 if not engine_path:
     print("ENGINE_PATH environment variable not set")
     sys.exit(0)
-chess_engine = ChessEngine(engine_path)
+global_data.chess_engine = ChessEngine(engine_path)
 
 
 def run_window():
@@ -65,7 +65,7 @@ def chessai_process(frame):
         global_data.debug_frame = top_row
 
     # Visualize the board
-    board_canvas = draw_board_canvas(board_array)
+    board_canvas = draw_board_canvas(board_array, global_data.hint_move)
     board_canvas = imutils.resize(board_canvas, height=target_height)
     with global_data.frame_lock:
         global_data.visualization_frame = board_canvas
@@ -131,7 +131,7 @@ def main():
     pathlib.Path(global_data.data_root).mkdir(parents=True, exist_ok=True)
 
     # Import these after setting data_root
-    from chessai.routers import system_monitor, xiangqi, camera
+    from chessai.routers import system_monitor, xiangqi, camera, vision
     from chessai.utils import extract_frontend_dist
     from chessai.database import engine, Base
 
@@ -161,6 +161,7 @@ def main():
     app.include_router(xiangqi.router)
     app.include_router(system_monitor.router)
     app.include_router(camera.router)
+    app.include_router(vision.router)
     app.mount(
         "/", StaticFiles(directory=static_folder, html=True), name="static"
     )

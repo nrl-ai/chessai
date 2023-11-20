@@ -6,7 +6,22 @@ ChessAI is a groundbreaking tool that brings together computer vision, chess alg
 - Deep Learning / Data Preparation: `dnn_models/data_preparation` - Currenly only support for Chinese Chess (XiangQi), [contact me](https://aicurious.io/contact) for the license and the source code of the data preparation tool.
 - Deep Learning / Training: `dnn_models/training`.
 
-## 2. Environment setup
+## Roadmap
+
+- [x] Chess position detection.
+- [x] Chess engine integration.
+- [ ] Move recognition.
+- [ ] Move history.
+- [ ] Move suggestion.
+- [ ] Play against the computer.
+- [ ] Game analysis with engine.
+- [ ] Game analysis with ChatGPT + Voice.
+- [ ] Play against other players.
+- [ ] Camera calibration.
+- [ ] Deep learning model for chess board detection (No need to use ARUCO markers).
+- [ ] Support for other chess variants.
+
+## Environment setup
 
 - Requirements: Python 3.9, [Conda](https://docs.conda.io/en/latest/miniconda.html), Node.js 18+.
 - Clone this repository.
@@ -32,7 +47,7 @@ cd ..
 bash build_frontend.sh
 ```
 
-## 3. Build chess engine
+## Build chess engine
 
 - This project uses [godogpaw](https://github.com/hmgle/godogpaw) as the chess engine.
 - Install [Go](https://go.dev/doc/install).
@@ -45,7 +60,7 @@ go build
 
 - Copy the executable file (`godogpaw*`) to the [./data/engines](./data/engines) folder.
 
-## 4. Usage
+## Run the app
 
 ```bash
 ENGINE_PATH="data/engines/godogpaw-macos-arm" python -m chessai.app --run_app
@@ -53,7 +68,7 @@ ENGINE_PATH="data/engines/godogpaw-macos-arm" python -m chessai.app --run_app
 
 Replace `ENGINE_PATH` with the path to the chess engine executable file.
 
-## 5. Data preparation & Training
+## Data preparation & Training
 
 This project uses computer vision and deep learning to detect chess pieces and chess board position.
 
@@ -64,7 +79,7 @@ This project uses computer vision and deep learning to detect chess pieces and c
 - Go to [dnn_models](./dnn_models) folder and follow the instructions in the `README.md` file to prepare the data and train the model.
 - **NOTE:** Only training source code and pretrained models are included in this repository. The data preparation scripts and the training datset are not included. [Contact me](https://aicurious.io/contact) for the license and the data.
 
-## 6. References
+## References
 
 - This project was initially built for [Hackster's OpenCV AI Competition 2023](https://www.hackster.io/contests/opencv-ai-competition-2023). Hackster Project: [ChessAI - Chinese Chess Game Analyzer](https://www.hackster.io/vietanhdev/chessai-chinese-chess-game-analyzer-4be768).
 - Object detection model (for chess pieces) is based on [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX) - License: Apache 2.0.

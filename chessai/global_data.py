@@ -15,3 +15,9 @@ visualization_frame = None
 
 board_lock = Lock()
 board_array = None
+
+game_lock = Lock()
+game_state = None
+
+chess_engine = None
+hint_move = None
