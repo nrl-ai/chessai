@@ -12,7 +12,7 @@ ChessAI is a groundbreaking tool that brings together computer vision, chess alg
 - [x] Chess engine integration.
 - [ ] Move recognition.
 - [ ] Move history.
-- [ ] Move suggestion.
+- [x] Move suggestion.
 - [ ] Play against the computer.
 - [ ] Game analysis with engine.
 - [ ] Game analysis with ChatGPT + Voice.
