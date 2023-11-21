@@ -1,5 +1,5 @@
 import subprocess
-from chessai.game_state import GameState, Player
+from chessai.game.game_state import GameState, Player
 
 
 class ChessEngine:

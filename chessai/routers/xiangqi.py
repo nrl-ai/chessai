@@ -2,7 +2,7 @@ from fastapi import APIRouter, Response
 from pydantic import BaseModel
 
 from chessai import global_data
-from chessai.game_state import GameState, Player
+from chessai.game.game_state import GameState, Player
 
 
 router = APIRouter(

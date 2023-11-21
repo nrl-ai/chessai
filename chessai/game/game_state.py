@@ -1,3 +1,6 @@
+from .simple_engine.simple_engine import SimpleEngine
+
+
 class Player:
     RED = "red"
     BLACK = "black"

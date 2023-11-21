@@ -1,5 +1,5 @@
-__appname__ = "ChessAI - XiangQi Chinese Chess Analysis"
+__appname__ = "ChessAI"
 __description__ = (
-    "Chinese Chess Game Analyzer"
+    "XiangQi Chinese Chess Analysis"
 )
 __version__ = "0.0.1"

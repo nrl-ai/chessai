@@ -17,9 +17,9 @@ from fastapi.staticfiles import StaticFiles
 from chessai.app_info import __appname__, __description__, __version__
 from chessai import global_data
 from chessai import config
-from chessai.board_aligner import BoardAligner
-from chessai.piece_detector import PieceDetector
-from chessai.chess_engine import ChessEngine
+from chessai.vision.board_aligner import BoardAligner
+from chessai.vision.piece_detector import PieceDetector
+from chessai.game.chess_engine import ChessEngine
 from chessai.visualization import draw_board_canvas
 from chessai.utils import list_camera_ports
 from chessai.camera_manager import start_camera
@@ -140,8 +140,6 @@ def main():
         os.path.join(global_data.data_root, "frontend-dist")
     )
     extract_frontend_dist(static_folder)
-    print(static_folder)
-
 
     logging.info("Creating database tables...")
     Base.metadata.create_all(bind=engine)

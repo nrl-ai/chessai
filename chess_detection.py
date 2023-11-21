@@ -59,7 +59,6 @@ if __name__ == "__main__":
 
     if args.input_folder is not None:
         for img in os.listdir(args.input_folder):
-            print(img)
             img_path = os.path.join(args.input_folder, img)
             srcimg = cv2.imread(img_path)
             srcimg = net.detect(srcimg)
