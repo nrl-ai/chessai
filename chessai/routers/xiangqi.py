@@ -23,7 +23,7 @@ class NewGameRequest(BaseModel):
 @router.post("/new_game", response_class=Response)
 async def new_game(data: NewGameRequest):
     with global_data.game_lock:
-        global_data.game_state = GameState(global_data.board_array, Player.RED if data.next_player == "red" else Player.BLACK)
+        global_data.game_state = GameState(global_data.board_array, Player.RED if data.next_player == "r" else Player.BLACK)
     return Response(
         content="OK",
         media_type="text/plain",

@@ -1,12 +1,12 @@
 from .piece import Piece
 
 
-class Horse(Piece):
-    def __init__(self, position, team, board, type="h"):
+class Knight(Piece):
+    def __init__(self, position, team, board, type="n"):
         super().__init__(position, team, board, type)
         self.poistion = position
         self.x, self.y = position
-        self.notation = "H"
+        self.notation = "N"
 
     def get_possible_moves(self, board):
         moves = []

@@ -22,7 +22,7 @@ import { useToast } from "@/registry/default/ui/use-toast"
 
 export function NewGame({ children }: { children: React.ReactNode }) {
   const { toast } = useToast()
-  const [nextPlayer, setNextPlayer] = useState<string>("red")
+  const [nextPlayer, setNextPlayer] = useState<string>("r")
 
   const newGame = () => {
     fetch("/api/xiangqi/new_game", {
@@ -62,14 +62,14 @@ export function NewGame({ children }: { children: React.ReactNode }) {
           >
             <SelectTrigger id="next_player">
               <SelectValue placeholder="Next Player">
-                {"red" === nextPlayer ? "Red" : "Black"}
+                {"r" === nextPlayer ? "Red" : "Black"}
               </SelectValue>
             </SelectTrigger>
             <SelectContent position="popper">
-              <SelectItem value={"red"} key={"red"}>
+              <SelectItem value={"r"} key={"r"}>
                 Red
               </SelectItem>
-              <SelectItem value={"black"} key={"black"}>
+              <SelectItem value={"b"} key={"b"}>
                 Black
               </SelectItem>
             </SelectContent>

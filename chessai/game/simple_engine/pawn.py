@@ -1,17 +1,17 @@
 from .piece import Piece
 
 
-class Soldier(Piece):
-    def __init__(self, position, team, board, type="s"):
+class Pawn(Piece):
+    def __init__(self, position, team, board, type="p"):
         super().__init__(position, team, board, type)
         self.position = position
         self.x, self.y = position
-        self.notation = "S"
+        self.notation = "P"
 
     def get_possible_moves(self, board):
         moves = []
 
-        # black and red Soldiers have different directions
+        # black and red pawns have different directions
         if self.team == "b":
             l = (
                 [

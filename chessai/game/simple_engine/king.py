@@ -6,7 +6,7 @@ class King(Piece):
         super().__init__(position, team, board, type)
         self.position = position
         self.x, self.y = position
-        self.notation = "G"
+        self.notation = "K"
 
     def get_possible_moves(self, board):
         moves = []

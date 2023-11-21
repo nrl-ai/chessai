@@ -119,7 +119,7 @@ export default function IndexPage() {
 
   const [currentGame, setCurrentGame] = useState<any>({
     is_playing: false,
-    next_player: "red",
+    next_player: "r",
   })
   useEffect(() => {
     fetch("/api/xiangqi/current_game", {
@@ -131,9 +131,9 @@ export default function IndexPage() {
       .then((res) => res.json())
       .then(setCurrentGame)
   }, [])
-  const isRedTurn = currentGame.is_playing && currentGame.next_player === "red"
+  const isRedTurn = currentGame.is_playing && currentGame.next_player === "r"
   const isBlackTurn =
-    currentGame.is_playing && currentGame.next_player === "black"
+    currentGame.is_playing && currentGame.next_player === "b"
   const isPlaying = currentGame.is_playing
 
   return (

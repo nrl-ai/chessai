@@ -1,12 +1,12 @@
 from .piece import Piece
 
 
-class Elephant(Piece):
-    def __init__(self, position, team, board, type="e"):
+class Bishop(Piece):
+    def __init__(self, position, team, board, type="b"):
         super().__init__(position, team, board, type)
         self.position = position
         self.x, self.y = position
-        self.notation = "E"
+        self.notation = "B"
 
     def get_possible_moves(self, board):
         # Elephant's movement is restricted to only 7 board positions

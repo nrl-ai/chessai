@@ -1,35 +1,47 @@
+from .piece_factory import PieceFactory
 from .piece import Piece
-from .chariot import Chariot
-from .horse import Horse
+from .rook import Rook
+from .knight import Knight
 from .king import King
 from .cannon import Cannon
-from .soldier import Soldier
+from .pawn import Pawn
 from .advisor import Advisor
-from .elephant import Elephant
+from .bishop import Bishop
 
 
 class SimpleEngine:
-    def __init__(self):
-        self.current_turn = "r"
-        self.from_pos = None
-        self.last_pos = None
-        self.picked_up_piece = None
-        self.possible_moves = []
-
+    def __init__(self, board, current_turn="r"):
+        self.current_turn = current_turn
         self.config = [[None for i in range(9)] for i in range(10)]
-        self.setup_new_board()
+        if board:
+            self.load_board(board)
+        else:
+            self.setup_new_board()
+
+    def load_board(self, board):
+        """Load board from board matrix"""
+        for row in range(10):
+            for col in range(9):
+                piece = board[row][col]
+                if piece:
+                    piece_class = PieceFactory.get_piece_class(piece[1])
+                    self.config[row][col] = piece_class(
+                        (row, col), piece[0], self, piece[1]
+                    )
+                else:
+                    self.config[row][col] = None
 
     def setup_new_board(self):
         self.config[0] = [
-            Chariot((0, 0), "b", self),
-            Horse((0, 1), "b", self),
-            Elephant((0, 2), "b", self),
+            Rook((0, 0), "b", self),
+            Knight((0, 1), "b", self),
+            Bishop((0, 2), "b", self),
             Advisor((0, 3), "b", self),
             King((0, 4), "b", self),
             Advisor((0, 5), "b", self),
-            Elephant((0, 6), "b", self),
-            Horse((0, 7), "b", self),
-            Chariot((0, 8), "b", self),
+            Bishop((0, 6), "b", self),
+            Knight((0, 7), "b", self),
+            Rook((0, 8), "b", self),
         ]
         self.config[2] = [
             None,
@@ -44,15 +56,15 @@ class SimpleEngine:
         ]
 
         self.config[9] = [
-            Chariot((9, 0), "r", self),
-            Horse((9, 1), "r", self),
-            Elephant((9, 2), "r", self),
+            Rook((9, 0), "r", self),
+            Knight((9, 1), "r", self),
+            Bishop((9, 2), "r", self),
             Advisor((9, 3), "r", self),
             King((9, 4), "r", self),
             Advisor((9, 5), "r", self),
-            Elephant((9, 6), "r", self),
-            Horse((9, 7), "r", self),
-            Chariot((9, 8), "r", self),
+            Bishop((9, 6), "r", self),
+            Knight((9, 7), "r", self),
+            Rook((9, 8), "r", self),
         ]
         self.config[7] = [
             None,
@@ -67,8 +79,8 @@ class SimpleEngine:
         ]
 
         for i in range(0, 9, 2):
-            self.config[3][i] = Soldier((3, i), "b", self)
-            self.config[6][i] = Soldier((6, i), "r", self)
+            self.config[3][i] = Pawn((3, i), "b", self)
+            self.config[6][i] = Pawn((6, i), "r", self)
 
     def get_piece(self, pos: tuple) -> Piece:
         return self.config[pos[0]][pos[1]]
@@ -97,7 +109,7 @@ class SimpleEngine:
                         return True
         return False
 
-    def is_check_mated(self):
+    def is_checkmate(self):
         for row in self.config:
             for piece in row:
                 if piece and piece.team == self.current_turn:
@@ -129,83 +141,33 @@ class SimpleEngine:
         columns = x // interval
         return int(rows), int(columns)
 
-    def handle_click(self, pos: tuple):
-        my, mx = pos
-        y = my // self.tile_width
-        x = mx // self.tile_width
+    def check_move(self, from_pos, to_pos):
+        if self.is_checkmate():
+            return False
+        from_x, from_y = from_pos
+        piece = self.config[from_x][from_y]
+        if piece and piece.team != self.current_turn:
+            return False
+        possible_moves = piece.get_valid_moves(self)
+        if to_pos in possible_moves:
+            return True
+        return False
 
-        if (x, y) in self.possible_moves and self.selected_pos:
-            # performing a valid move
-            (
-                row,
-                col,
-            ) = self.selected_pos  ## coords of the chess piece we picked up
-            chessPiece = self.config[row][col]
-
-            chessPiece.move(self, (x, y))
-            self.selected_pos = []
-            self.possible_moves = []
-            self.current_turn = "b" if self.current_turn == "r" else "r"
-
-            print(self.convert_to_readable())
-
-        elif self.config[x][y] and self.config[x][y].team == self.current_turn:
-            self.possible_moves = self.config[x][y].get_valid_moves(self)
-            if self.possible_moves:
-                self.selected_pos = x, y
-        else:
-            self.selected_pos = []
-            self.possible_moves = []
-            print("Can't select")
+    def move(self, from_pos, to_pos):
+        if not self.check_move(from_pos, to_pos):
+            return False
+        from_x, from_y = from_pos
+        chess_piece = self.config[from_x][from_y]
+        chess_piece.move(self, to_pos)
+        self.current_turn = "b" if self.current_turn == "r" else "r"
+        return True
 
     def get_game_state(self):
         return [
             self.possible_moves,
             self.from_pos,
             self.last_pos,
-            self.picked_up_piece,
         ]
-
-    def handle_mouse_down(self, pos):
-        x, y = pos
-        if (x, y) in self.possible_moves and self.from_pos:
-            row, col = self.from_pos  ## coords of the chess piece we picked up
-            self.last_pos = (row, col)
-            chessPiece = self.config[row][col]
-
-            captured = chessPiece.move(self, (x, y))
-            self.from_pos = None
-            self.possible_moves = []
-            self.current_turn = "b" if self.current_turn == "r" else "r"
-
-        elif self.config[x][y] and self.config[x][y].team == self.current_turn:
-            # pick up a piece
-            self.possible_moves = self.config[x][y].get_valid_moves(self)
-            if self.possible_moves:
-                self.from_pos = x, y
-                self.picked_up_piece = self.config[x][y]
-
-        else:
-            self.from_pos = None
-            self.possible_moves = []
-            print("Can't select")
-
-    def handle_mouse_up(self, pos):
-        x, y = pos
-        if (
-            (x, y) in self.possible_moves
-            and self.picked_up_piece
-            and self.from_pos
-        ):
-            # performing a valid move
-            row, col = self.from_pos  ## coords of the chess piece we picked up
-            self.last_pos = (row, col)
-
-            self.from_pos = None
-            self.possible_moves = []
-            self.current_turn = "b" if self.current_turn == "r" else "r"
-
-        self.picked_up_piece = None
 
     def convert_to_readable(self):
         output = ""
