@@ -11,7 +11,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model",
         type=str,
-        default="data/dnn/chessai-det.onnx",
+        default="data/dnn/chessai-det-light.onnx",
         help="Input your onnx model.",
     )
     parser.add_argument(

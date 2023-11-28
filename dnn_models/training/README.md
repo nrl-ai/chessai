@@ -70,4 +70,4 @@ python tools/export_onnx.py -f exps/tfs_base.py -c YOLOX_outputs/tfs_base/best_c
 ```
 
 
-Copy `chessai-det-*.onnx` to `dnn_models/deployment/models`.
+Copy `chessai-det-*.onnx` to `data/dnn`.
