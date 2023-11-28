@@ -6,6 +6,8 @@ ChessAI is a groundbreaking tool that brings together computer vision, chess alg
 - Deep Learning / Data Preparation: `dnn_models/data_preparation` - Currenly only support for Chinese Chess (XiangQi), [contact me](https://aicurious.io/contact) for the license and the source code of the data preparation tool.
 - Deep Learning / Training: `dnn_models/training`.
 
+![ChessAI](./docs/images/screenshot.png)
+
 ## Roadmap
 
 - [x] Chess position detection.

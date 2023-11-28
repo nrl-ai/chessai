@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+from chessai.config import CELL_RECTANGLES
+
 pieces = [
     "rr",
     "rn",

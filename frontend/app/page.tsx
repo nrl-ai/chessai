@@ -278,7 +278,7 @@ export default function IndexPage() {
               Click <b>New Game</b> to start a new game from current position.
             </div>
           )}
-          <div className={"flex flex-col gap-2" + (isPlaying ? "" : " hidden")}>
+          <div className={"hidden flex-col gap-2" + (isPlaying ? "" : " hidden")}>
             <h2 className="mt-4 text-xl font-semibold leading-none">
               Move History
             </h2>

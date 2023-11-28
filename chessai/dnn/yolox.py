@@ -180,7 +180,6 @@ class YOLOXObjectDetector:
                 dets[:, 4],
                 dets[:, 5],
             )
-            # final_boxes, final_scores = self.nms_all_classes(final_boxes, final_scores, self.nms_threshold)
             if visualize is not None:
                 self.draw_detections(visualize, final_boxes, final_scores, final_cls_inds)
             return final_boxes, final_scores, final_cls_inds
