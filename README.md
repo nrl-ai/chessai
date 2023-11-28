@@ -12,16 +12,8 @@ ChessAI is a groundbreaking tool that brings together computer vision, chess alg
 
 - [x] Chess position detection.
 - [x] Chess engine integration.
-- [ ] Move recognition.
-- [ ] Move history.
 - [x] Move suggestion.
-- [ ] Play against the computer.
-- [ ] Game analysis with engine.
-- [ ] Game analysis with ChatGPT + Voice.
-- [ ] Play against other players.
-- [ ] Camera calibration.
 - [ ] Deep learning model for chess board detection (No need to use ARUCO markers).
-- [ ] Support for other chess variants.
 
 ## Environment setup
 
