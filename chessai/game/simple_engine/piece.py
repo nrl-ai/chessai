@@ -19,7 +19,7 @@ class Piece:
             board.set_piece((goal_x, goal_y), self)
             board.set_piece((self.x, self.y), None)
             if (
-                not board.is_inCheck(self.team)
+                not board.is_in_check(self.team)
                 and not board.king_face_each_other()
             ):
                 valid_moves.append((goal_x, goal_y))

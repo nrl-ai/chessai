@@ -136,6 +136,31 @@ export default function IndexPage() {
     currentGame.is_playing && currentGame.next_player === "b"
   const isPlaying = currentGame.is_playing
 
+  const play = async () => {
+    const res = await fetch("/api/xiangqi/play", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json())
+    if (res.error) {
+      toast({
+        title: "Error",
+        description: res.error,
+        duration: 3000,
+      })
+      return
+    }
+    if (!res.success) {
+      toast({
+        title: "Error",
+        description: res.message || "Unknown error",
+        duration: 3000,
+      })
+      return
+    }
+  }
+
   return (
     <div style={DotBgStyle} className="pt-6">
       <section className="container flex flex-row gap-8 py-2">
@@ -233,7 +258,10 @@ export default function IndexPage() {
               <div className="text-xl">-------------</div>
             </div>
           </div>
-          <Button className="h-20 w-full bg-blue-600 hover:bg-blue-500 dark:text-white">
+          <Button className="h-20 w-full bg-blue-600 hover:bg-blue-500 dark:text-white"
+            onClick={play}
+            disabled={!isPlaying}
+          >
             Play (Space)
           </Button>
           <NewGame>

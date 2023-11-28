@@ -18,5 +18,6 @@ board_array = None
 
 game_lock = Lock()
 game_state = None
+prev_game_state = None
 
 chess_engine = None

@@ -13,7 +13,7 @@ class SimpleEngine:
     def __init__(self, board, current_turn="r"):
         self.current_turn = current_turn
         self.config = [[None for i in range(9)] for i in range(10)]
-        if board:
+        if board is not None:
             self.load_board(board)
         else:
             self.setup_new_board()
