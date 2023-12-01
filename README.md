@@ -6,7 +6,7 @@ ChessAI is a groundbreaking tool that brings together computer vision, chess alg
 - Deep Learning / Data Preparation: `dnn_models/data_preparation` - Currenly only support for Chinese Chess (XiangQi), [contact me](https://aicurious.io/contact) for the license and the source code of the data preparation tool.
 - Deep Learning / Training: `dnn_models/training`.
 
-![ChessAI](./docs/images/screenshot.png)
+![ChessAI](https://github.com/vietanhdev/chessai/raw/main/docs/images/screenshot.png)
 
 ## Roadmap
 
@@ -68,7 +68,7 @@ This project uses computer vision and deep learning to detect chess pieces and c
 
 **AI flow for chess position detection:**
 
-![AI flow for chess position detection](./docs/images/ai_flow.png)
+![AI flow for chess position detection](https://raw.githubusercontent.com/vietanhdev/chessai/main/docs/images/ai_flow.png)
 
 - Go to [dnn_models](./dnn_models) folder and follow the instructions in the `README.md` file to prepare the data and train the model.
 - **NOTE:** Only training source code and pretrained models are included in this repository. The data preparation scripts and the training datset are not included. [Contact me](https://aicurious.io/contact) for the license and the data.
