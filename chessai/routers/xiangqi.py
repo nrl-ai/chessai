@@ -45,18 +45,23 @@ async def play():
     with global_data.game_lock:
         prev_game_state = global_data.prev_game_state.copy()
         game_state = global_data.game_state.copy()
-    move = Move.from_game_states(prev_game_state, game_state)
-    if move is None:
-        return {
-            "success": False,
-            "message": "Invalid move",
-        }
+
+    # move = Move.from_game_states(prev_game_state, game_state)
+    # if move is None:
+    #     return {
+    #         "success": False,
+    #         "message": "Invalid move",
+    #     }
+
     with global_data.game_lock:
         global_data.prev_game_state = game_state
+        global_data.board_array = global_data.board_array
         global_data.game_state.hint_move = None
+        global_data.game_state.next_player = Player.BLACK if global_data.game_state.next_player == Player.RED else Player.RED
+
     return {
         "success": True,
-        "move": str(move),
+        # "move": str(move),
     }
 
 @router.get("/get_hint")
