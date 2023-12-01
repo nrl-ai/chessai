@@ -270,9 +270,9 @@ export default function IndexPage() {
           <Button className="w-full" onClick={getHint} disabled={!isPlaying}>
             Hint
           </Button>
-          <Button className="w-full" disabled={!isPlaying}>
+          {/* <Button className="w-full" disabled={!isPlaying}>
             AI Analyzer
-          </Button>
+          </Button> */}
           {!isPlaying && (
             <div className="text-sm text-gray-500 dark:text-gray-400">
               Click <b>New Game</b> to start a new game from current position.
